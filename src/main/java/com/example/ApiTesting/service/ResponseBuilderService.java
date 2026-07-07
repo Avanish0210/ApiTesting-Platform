@@ -1,6 +1,7 @@
 package com.example.ApiTesting.service;
 
 import com.example.ApiTesting.dto.ApiTestResponse;
+import com.example.ApiTesting.dto.CookieDto;
 import com.example.ApiTesting.dto.HeaderDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.client.ClientHttpResponse;
@@ -25,6 +26,7 @@ public class ResponseBuilderService {
             buildStatus(apiResponse, clientResponse);
             buildHeaders(apiResponse, clientResponse);
             buildBody(apiResponse, clientResponse);
+            buildCookies(apiResponse, clientResponse);
 
             return apiResponse;
         });
@@ -58,5 +60,22 @@ public class ResponseBuilderService {
 
     private void apiResponseTime(ApiTestResponse response, long start, long end) {
         response.setResponseTime((end - start) / 1_000_000);
+    }
+
+    private void buildCookies(ApiTestResponse response, ClientHttpResponse clientResponse) {
+
+        List<CookieDto> cookies = new ArrayList<>();
+        List<String> setCookies = clientResponse.getHeaders().get("Set-Cookie");
+
+        if (setCookies != null) {
+            for (String cookie : setCookies) {
+                String[] pair = cookie.split(";", 2)[0].split("=", 2);
+                CookieDto dto = new CookieDto();
+                dto.setName(pair[0]);
+                dto.setValue(pair.length > 1 ? pair[1] : "");
+                cookies.add(dto);
+            }
+        }
+        response.setCookies(cookies);
     }
 }

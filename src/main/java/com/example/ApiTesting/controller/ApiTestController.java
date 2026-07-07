@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/api/test")
 @RequiredArgsConstructor
@@ -22,7 +24,7 @@ public class ApiTestController {
     private final ApiService apiService;
 
     @PostMapping
-    private ResponseEntity<ApiTestResponse> apiTest(@Valid @RequestBody ApiTestRequest apiTestRequest) {
+    private ResponseEntity<ApiTestResponse> apiTest(@Valid @RequestBody ApiTestRequest apiTestRequest) throws IOException {
         ApiTestResponse apiTestResponse = apiService.apiTest(apiTestRequest);
         return ResponseEntity.status(apiTestResponse.getStatus()).body(apiTestResponse);
     }

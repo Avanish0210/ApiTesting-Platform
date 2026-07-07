@@ -26,9 +26,17 @@ public class ApiTestRequest {
 
     private List<QueryParamDto> queryParams;
 
+    private List<CookieDto> cookies;
+
+    private List<AssertionDto> assertions;
+
     private AuthDto authentication;
 
-    private String body;
+    private BodyDto body;
 
     private Long responseTime;
+
+    private Integer timeout = 30_000; // milliseconds
+
+    private Boolean followRedirects = true;
 }

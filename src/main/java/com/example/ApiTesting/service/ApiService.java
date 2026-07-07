@@ -7,18 +7,24 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
+import java.io.IOException;
+
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class ApiService {
-    private final RestClient restClient;
     private final RequestBuilderService requestBuilder;
     private final ResponseBuilderService responseBuilder;
+    private final AssertionService assertionService;
 
-    public ApiTestResponse apiTest(ApiTestRequest apiTestRequest) {
+    public ApiTestResponse apiTest(ApiTestRequest apiTestRequest) throws IOException {
 
         RestClient.RequestBodySpec requestBodySpec = requestBuilder.buildRequest(apiTestRequest);
-        return responseBuilder.execute(requestBodySpec);
+        ApiTestResponse response =  responseBuilder.execute(requestBodySpec);
+
+        assertionService.executeAssertions(apiTestRequest,response);
+
+        return response;
     }
 }

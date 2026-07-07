@@ -1,14 +1,19 @@
 package com.example.ApiTesting.dto;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Data
-@Getter
-@Setter
-public class HeaderDto {
+public class FormDataDto {
+
     private String key;
+
     private String value;
+
+    // true if this part is a file
+    private boolean file;
+
+    // path of uploaded file
+    private String filePath;
+
     private boolean enabled = true;
 }
