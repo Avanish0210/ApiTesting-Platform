@@ -11,4 +11,5 @@ public class AssertionResult {
     private String expected;
     private String actual;
     private String message;
+    private String assertion;
 }

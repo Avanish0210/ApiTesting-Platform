@@ -76,7 +76,7 @@ public class RequestBuilderService {
 
         requestSpec.headers(httpHeaders -> {
             for (HeaderDto header : headers) {
-                if (!header.isEnabled()) {
+                if (!header.getEnabled()) {
                     continue;
                 }
                 if (header.getKey() == null || header.getKey().isBlank()) {
@@ -199,14 +199,9 @@ public class RequestBuilderService {
             case NONE -> {
                 // Do nothing
             }
-            case BEARER -> requestSpec.headers(headers ->
-                    headers.setBearerAuth(auth.getToken()));
-            case BASIC -> requestSpec.headers(headers ->
-                    headers.setBasicAuth(
-                            auth.getUsername(),
-                            auth.getPassword()));
-            case API_KEY -> requestSpec.headers(headers ->
-                    headers.add(auth.getApiKeyHeaderName(), auth.getApiKeyValue()));
+            case BEARER -> requestSpec.headers(headers -> headers.setBearerAuth(auth.getToken()));
+            case BASIC -> requestSpec.headers(headers -> headers.setBasicAuth(auth.getUsername(), auth.getPassword()));
+            case API_KEY -> requestSpec.headers(headers -> headers.add(auth.getApiKeyHeaderName(), auth.getApiKeyValue()));
         }
     }
 

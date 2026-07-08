@@ -10,5 +10,5 @@ import lombok.Setter;
 public class HeaderDto {
     private String key;
     private String value;
-    private boolean enabled = true;
+    private Boolean enabled = true;
 }

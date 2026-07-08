@@ -16,6 +16,8 @@ public class ApiTestResponse {
     private String responseBody;
     private List<HeaderDto> headers;
     private List<CookieDto> cookies;
+    private Integer passedAssertions = 0;
+    private Integer failedAssertions = 0;
     private List<AssertionResult> assertionResults;
     private boolean allPassed;
     private String message;
