@@ -1,24 +1,20 @@
 package com.example.ApiTesting.entity;
-
-
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "collections")
+@Table(name = "notification_configs")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Collection {
+public class NotificationConfig {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -27,19 +23,30 @@ public class Collection {
     @Column(nullable = false)
     private String name;
 
-    private String description;
+    private Boolean enabled;
+
+    // Email
+    private String email;
+
+    // Slack
+    @Column(columnDefinition = "TEXT")
+    private String slackWebhook;
+
+    // Microsoft Teams
+    @Column(columnDefinition = "TEXT")
+    private String teamsWebhook;
+
+    // Discord
+    @Column(columnDefinition = "TEXT")
+    private String discordWebhook;
+
+    // Generic Webhook
+    @Column(columnDefinition = "TEXT")
+    private String webhook;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-
-    @OneToMany(mappedBy = "collection",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    private List<SavedRequest> requests = new ArrayList<>();
-
-    @ManyToOne
-    private Environment environment;
 }

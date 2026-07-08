@@ -59,13 +59,7 @@ public class ApiService {
 
             history = historyService.save(savedRequest, response);
 
-            variableExtractionService.extract(
-                    savedRequest,
-                    response);
-        }
-
-        if(savedRequest != null){
-            historyService.save(savedRequest, response);
+            variableExtractionService.extract(savedRequest, response);
         }
 
         return response;

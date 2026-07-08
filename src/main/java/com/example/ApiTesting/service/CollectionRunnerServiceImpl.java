@@ -29,6 +29,7 @@ public class CollectionRunnerServiceImpl
     private final CollectionRunRepository runRepository;
     private final ApiService apiService;
     private final SavedRequestMapper mapper;
+    private final NotificationService notificationService;
 
     @Override
     public CollectionRunResponse run(UUID collectionId) {
@@ -89,6 +90,7 @@ public class CollectionRunnerServiceImpl
         );
 
         runRepository.save(run);
+        notificationService.notifyCollectionRun(run);
         return toResponse(run);
     }
     @Override
