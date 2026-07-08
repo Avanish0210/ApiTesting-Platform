@@ -25,13 +25,13 @@ public class ExecutionHistoryServiceImpl implements ExecutionHistoryService {
     private final ExecutionHistoryMapper mapper;
 
     @Override
-    public void save(SavedRequest savedRequest,
-                     ApiTestResponse response) {
+    public ExecutionHistory save(SavedRequest savedRequest,
+                                 ApiTestResponse response) {
 
         ExecutionHistory history =
                 mapper.toEntity(savedRequest, response);
 
-        repository.save(history);
+        return repository.save(history);
     }
 
     @Override

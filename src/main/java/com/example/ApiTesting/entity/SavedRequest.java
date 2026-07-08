@@ -73,4 +73,11 @@ public class SavedRequest {
             orphanRemoval = true
     )
     private List<ExecutionHistory> executionHistories = new ArrayList<>();
+
+    @OneToMany(
+            mappedBy = "savedRequest",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<ExtractionRule> extractionRules = new ArrayList<>();
 }

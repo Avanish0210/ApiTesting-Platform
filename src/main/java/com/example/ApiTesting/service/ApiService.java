@@ -26,6 +26,9 @@ public class ApiService {
     private final ExecutionHistoryService historyService;
     private final ExecutionHistoryRepository executionHistoryRepository;
     private final SavedRequestMapper savedRequestMapper;
+    private final EnvironmentResolverService environmentResolverService;
+    private final VariableExtractionService variableExtractionService;
+    private final DynamicVariableService dynamicVariableService;
 
 
     public ApiTestResponse apiTest(ApiTestRequest apiTestRequest) throws IOException {
@@ -43,11 +46,23 @@ public class ApiService {
     }
 
     public ApiTestResponse execute(ApiTestRequest request, SavedRequest savedRequest) throws IOException {
+
+        request = environmentResolverService.resolve(request);
+        request = dynamicVariableService.resolve(request);
         RestClient.RequestBodySpec requestBodySpec = requestBuilder.buildRequest(request);
         ApiTestResponse response =  responseBuilder.execute(requestBodySpec);
-
         assertionService.executeAssertions(request,response);
 
+        ExecutionHistory history = null;
+
+        if(savedRequest != null){
+
+            history = historyService.save(savedRequest, response);
+
+            variableExtractionService.extract(
+                    savedRequest,
+                    response);
+        }
 
         if(savedRequest != null){
             historyService.save(savedRequest, response);
