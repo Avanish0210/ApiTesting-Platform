@@ -76,6 +76,9 @@ public class NotificationServiceImpl implements NotificationService {
         }
 
         try {
+            String html =
+                    emailTemplateService
+                            .buildExecutionReport(run);
 
             MimeMessage message =
                     mailSender.createMimeMessage();
@@ -88,9 +91,6 @@ public class NotificationServiceImpl implements NotificationService {
             helper.setSubject(
                     "Collection Execution Report");
 
-            String html =
-                    emailTemplateService
-                            .buildExecutionReport(run);
 
             helper.setText(html, true);
 
