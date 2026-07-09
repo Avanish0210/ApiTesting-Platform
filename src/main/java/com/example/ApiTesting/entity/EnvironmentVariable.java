@@ -31,4 +31,5 @@ public class EnvironmentVariable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "environment_id")
     private Environment environment;
+
 }

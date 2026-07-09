@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.UUID;
 
 @RestController
@@ -34,6 +35,36 @@ public class ReportController {
                         "attachment; filename=report.pdf")
                 .body(pdf);
 
+    }
+
+    @GetMapping(
+            value = "/runs/{runId}/excel",
+            produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    public ResponseEntity<byte[]> excel(
+            @PathVariable UUID runId) throws IOException {
+
+        byte[] file = reportService.generateExcel(runId);
+
+        return ResponseEntity.ok()
+                .header(
+                        HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=report.xlsx")
+                .body(file);
+    }
+
+    @GetMapping(
+            value = "/runs/{runId}/csv",
+            produces = "text/csv")
+    public ResponseEntity<byte[]> csv(
+            @PathVariable UUID runId) {
+
+        byte[] file = reportService.generateCsv(runId);
+
+        return ResponseEntity.ok()
+                .header(
+                        HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=report.csv")
+                .body(file);
     }
 
 }
