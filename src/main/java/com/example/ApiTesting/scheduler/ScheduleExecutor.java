@@ -9,6 +9,7 @@ import com.example.ApiTesting.repository.ScheduleRepository;
 import com.example.ApiTesting.service.CollectionRunnerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -24,9 +25,15 @@ public class ScheduleExecutor {
     private final CollectionRunnerService collectionRunnerService;
     private final ScheduleExecutionRepository executionRepository;
 
+    @Value("${app.scheduler.enabled:true}")
+    private boolean schedulerEnabled;
 
     @Scheduled(fixedDelay = 5000)
     public void executeSchedules() {
+        if (!schedulerEnabled) {
+            return;
+        }
+
         List<Schedule> schedules =
                 scheduleRepository.findByEnabledTrue();
         for (Schedule schedule : schedules) {
