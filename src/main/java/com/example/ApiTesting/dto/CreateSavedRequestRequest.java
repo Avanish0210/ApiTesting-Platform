@@ -35,4 +35,8 @@ public class CreateSavedRequestRequest {
     private BodyDto body;
 
     private List<AssertionDto> assertions;
+
+    private String preRequestScript;
+
+    private String postResponseScript;
 }

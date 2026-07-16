@@ -88,6 +88,9 @@ public class SavedRequestServiceImpl implements SavedRequestService {
         request.setTimeout(dto.getTimeout());
         request.setFollowRedirects(dto.getFollowRedirects());
 
+        request.setPreRequestScript(dto.getPreRequestScript());
+        request.setPostResponseScript(dto.getPostResponseScript());
+
         savedRequestRepository.save(request);
 
         return mapper.toResponse(request);

@@ -29,4 +29,8 @@ public class SavedRequestResponse {
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
+
+    private String preRequestScript;
+
+    private String postResponseScript;
 }

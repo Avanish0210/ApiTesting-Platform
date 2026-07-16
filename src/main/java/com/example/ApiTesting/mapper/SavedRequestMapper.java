@@ -21,6 +21,8 @@ public class SavedRequestMapper {
         request.setUrl(dto.getUrl());
         request.setTimeout(dto.getTimeout());
         request.setFollowRedirects(dto.getFollowRedirects());
+        request.setPreRequestScript(dto.getPreRequestScript());
+        request.setPostResponseScript(dto.getPostResponseScript());
 
         request.setCollection(collection);
 
@@ -42,6 +44,8 @@ public class SavedRequestMapper {
                 .url(request.getUrl())
                 .timeout(request.getTimeout())
                 .followRedirects(request.getFollowRedirects())
+                .preRequestScript(request.getPreRequestScript())
+                .postResponseScript(request.getPostResponseScript())
                 .build();
     }
 

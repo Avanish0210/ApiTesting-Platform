@@ -80,4 +80,10 @@ public class SavedRequest {
             orphanRemoval = true
     )
     private List<ExtractionRule> extractionRules = new ArrayList<>();
+
+    @Column(columnDefinition = "TEXT")
+    private String preRequestScript;
+
+    @Column(columnDefinition = "TEXT")
+    private String postResponseScript;
 }
